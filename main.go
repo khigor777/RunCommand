@@ -22,8 +22,7 @@ func main() {
 	if *file == "" {
 		fmt.Println(strings.Join(command.DirList(*ext, *cmd), "\n"))
 	} else {
-		dir := command.GetCurDir()
-		fmt.Println(command.RunScript(dir, &command.CurrentPath{
+		fmt.Println(command.RunScript(&command.CurrentPath{
 			Dir:     *file,
 			Command: *cmd,
 		}))
