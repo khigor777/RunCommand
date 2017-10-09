@@ -5,10 +5,11 @@ import (
 	"io/ioutil"
 	"os/exec"
 	"path/filepath"
+	"os"
 )
 
 func DirList(ext string, cmd string) []string {
-	file, err := ioutil.ReadDir("./")
+	file, err := ioutil.ReadDir(getCurDir())
 	res := []string{}
 	if err != nil {
 		panic(err)
@@ -21,6 +22,14 @@ func DirList(ext string, cmd string) []string {
 		}
 	}
 	return res
+}
+
+func getCurDir()string {
+	d, e := os.Getwd()
+	if e != nil {
+		panic(e)
+	}
+	return d
 }
 
 func RunScript(p Pather) string {
