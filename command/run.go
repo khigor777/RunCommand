@@ -9,6 +9,7 @@ import (
 )
 
 func DirList(ext string, cmd string) []string {
+	dir := getCurDir()
 	file, err := ioutil.ReadDir(getCurDir())
 	res := []string{}
 	if err != nil {
@@ -16,9 +17,9 @@ func DirList(ext string, cmd string) []string {
 	}
 	for _, f := range file {
 		if filepath.Ext(f.Name()) == ext {
-			n := f.Name()
-			o := RunScript(&AllPaths{Dir: n, Command: cmd})
-			res = append(res, fmt.Sprintf("File:%s, Message:%s", n, o))
+			fn := dir+"/"+f.Name()
+			o := RunScript(&AllPaths{Dir: fn, Command: cmd})
+			res = append(res, fmt.Sprintf("File:%s, Message:%s", fn, o))
 		}
 	}
 	return res
