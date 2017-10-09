@@ -14,7 +14,7 @@ func DirList(ext string, cmd string) []string {
 		panic(err)
 	}
 	for _, f := range file {
-		if filepath.Ext(f.Name()) == ".php" {
+		if filepath.Ext(f.Name()) == ext {
 			n := f.Name()
 			o := RunScript(&AllPaths{Dir: n, Command: cmd})
 			res = append(res, fmt.Sprintf("File:%s, Message:%s", n, o))
