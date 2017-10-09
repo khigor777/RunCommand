@@ -6,11 +6,12 @@ import (
 	"os/exec"
 	"path/filepath"
 	"os"
+
 )
 
 func DirList(ext string, cmd string) []string {
-	dir := getCurDir()
-	file, err := ioutil.ReadDir(getCurDir())
+	dir := GetCurDir()
+	file, err := ioutil.ReadDir(GetCurDir())
 	res := []string{}
 	if err != nil {
 		panic(err)
@@ -18,14 +19,14 @@ func DirList(ext string, cmd string) []string {
 	for _, f := range file {
 		if filepath.Ext(f.Name()) == ext {
 			fn := dir+"/"+f.Name()
-			o := RunScript(&AllPaths{Dir: fn, Command: cmd})
+			o := RunScript(dir, &AllPaths{Dir: fn, Command: cmd})
 			res = append(res, fmt.Sprintf("File:%s, Message:%s", fn, o))
 		}
 	}
 	return res
 }
 
-func getCurDir()string {
+func GetCurDir()string {
 	d, e := os.Getwd()
 	if e != nil {
 		panic(e)
@@ -33,10 +34,12 @@ func getCurDir()string {
 	return d
 }
 
-func RunScript(p Pather) string {
-	b, e := exec.Command(p.GetCommand(), p.GetFilePath()).Output()
-	if e != nil {
+func RunScript(cDir string, p Pather) string {
+	b := exec.Command(p.GetCommand(), p.GetFilePath())
+	b.Dir = cDir
+	s, e := b.Output()
+	if e != nil{
 		panic(e)
 	}
-	return string(b)
+	return string(s)
 }
