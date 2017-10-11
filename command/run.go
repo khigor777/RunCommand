@@ -9,8 +9,7 @@ import (
 	"log"
 )
 
-func DirList(ext string, cmd string) []string {
-
+func DirList(ext string, cmd string, path string) []string {
 	file, err := ioutil.ReadDir(GetCurDir())
 	res := []string{}
 	if err != nil {
@@ -19,7 +18,7 @@ func DirList(ext string, cmd string) []string {
 	for _, f := range file {
 		if filepath.Ext(f.Name()) == ext {
 			fn := f.Name()
-			o := RunScript(&AllPaths{Dir: fn, Command: cmd})
+			o := RunScript(&AllPaths{ AllCommand:&AllCommand{cmd},  Dir:fn})
 			res = append(res, fmt.Sprintf("File:%s, Message:%s", fn, o))
 		}
 	}

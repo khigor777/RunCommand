@@ -11,9 +11,18 @@ type Pather interface {
 	GetCommand() string
 }
 
-type AllPaths struct {
-	Dir     string
+type AllCommand struct {
 	Command string
+}
+
+func (ac *AllCommand) GetCommand() string  {
+	return trim(ac.Command)
+}
+
+type AllPaths struct {
+	*AllCommand
+	Dir     string
+
 }
 
 func (ap *AllPaths) GetFilePath() string {
@@ -24,13 +33,11 @@ func (ap *AllPaths) GetFilePath() string {
 	return r
 }
 
-func (ap *AllPaths) GetCommand() string {
-	return trim(ap.Command)
-}
 
 type CurrentPath struct {
+	*AllCommand
 	Dir     string
-	Command string
+
 }
 
 func (cp *CurrentPath) GetFilePath() string {
@@ -40,9 +47,6 @@ func (cp *CurrentPath) GetFilePath() string {
 	return cp.Dir
 }
 
-func (cp *CurrentPath) GetCommand() string {
-	return trim(cp.Command)
-}
 
 func trim(s string) string {
 	return strings.Trim(s, " ")

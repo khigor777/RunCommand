@@ -23,8 +23,10 @@ func main() {
 		fmt.Println(strings.Join(command.DirList(*ext, *cmd), "\n"))
 	} else {
 		fmt.Println(command.RunScript(&command.CurrentPath{
-			Dir:     *file,
-			Command: *cmd,
+			AllCommand:&command.AllCommand{*cmd},
+			Dir: *file,
 		}))
 	}
 }
+
+
