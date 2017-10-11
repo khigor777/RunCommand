@@ -6,18 +6,19 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"log"
+
 )
 
 func DirList(ext string, cmd string, path string) []string {
-	file, err := ioutil.ReadDir(GetCurDir())
+	file, err := ioutil.ReadDir(GetCurDir(path))
 	res := []string{}
 	if err != nil {
 		panic(err)
 	}
 	for _, f := range file {
 		if filepath.Ext(f.Name()) == ext {
-			fn := f.Name()
+			fn := path+"/"+f.Name()
+
 			o := RunScript(&AllPaths{ AllCommand:&AllCommand{cmd},  Dir:fn})
 			res = append(res, fmt.Sprintf("File:%s, Message:%s", fn, o))
 		}
@@ -25,7 +26,10 @@ func DirList(ext string, cmd string, path string) []string {
 	return res
 }
 
-func GetCurDir() string {
+func GetCurDir(path string) string {
+	if path != "" {
+		return path
+	}
 	d, e := os.Getwd()
 	if e != nil {
 		panic(e)
@@ -37,7 +41,7 @@ func RunScript(p Pather) string {
 	c := exec.Command(p.GetCommand(), p.GetFilePath())
 	b, e := c.Output()
 	if e != nil {
-		log.Fatal(p)
+		panic(p)
 	}
 	return string(b)
 }
