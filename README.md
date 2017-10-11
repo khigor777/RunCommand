@@ -1,6 +1,6 @@
 # README
 
-## Simple shell runner in Linux, Windows64, MacOS
+## Simple shell runner in Linux, Windows64
 
 Run all files in current path or one file.
 
