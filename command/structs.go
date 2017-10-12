@@ -4,7 +4,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
 )
 
 type Pather interface {
@@ -16,14 +15,13 @@ type AllCommand struct {
 	Command string
 }
 
-func (ac *AllCommand) GetCommand() string  {
+func (ac *AllCommand) GetCommand() string {
 	return trim(ac.Command)
 }
 
 type AllPaths struct {
 	*AllCommand
-	Dir     string
-
+	Dir string
 }
 
 func (ap *AllPaths) GetFilePath() string {
@@ -34,11 +32,9 @@ func (ap *AllPaths) GetFilePath() string {
 	return r
 }
 
-
 type CurrentPath struct {
 	*AllCommand
-	Dir     string
-
+	Dir string
 }
 
 func (cp *CurrentPath) GetFilePath() string {
@@ -47,7 +43,6 @@ func (cp *CurrentPath) GetFilePath() string {
 	}
 	return cp.Dir
 }
-
 
 func trim(s string) string {
 	return strings.Trim(s, " ")

@@ -21,13 +21,11 @@ func main() {
 	flag.Parse()
 
 	if *file == "" {
-		fmt.Println(strings.Join(command.DirList(*ext, *cmd, *dir), "\n"))
+		fmt.Println(strings.Join(command.RunDirScript(*ext, *cmd, *dir), "\n"))
 	} else {
 		fmt.Println(command.RunScript(&command.CurrentPath{
-			AllCommand:&command.AllCommand{*cmd},
-			Dir: *file,
+			AllCommand: &command.AllCommand{*cmd},
+			Dir:        *file,
 		}))
 	}
 }
-
-
