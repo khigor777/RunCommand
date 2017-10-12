@@ -16,6 +16,7 @@ func TestDirList(t *testing.T) {
 
 		if strings.Index(string(v), "Message1") == -1 {
 			t.Error("It's not working")
+
 		}
 	}
 
