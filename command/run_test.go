@@ -14,9 +14,8 @@ func TestDirList(t *testing.T) {
 	r := RunDirScript(".php", "php", d+"/testdata")
 	for _, v := range r {
 
-		if strings.Index(string(v), "Message1") == -1 {
+		if strings.Index(string(v), "Message") == -1 {
 			t.Error("It's not working")
-
 		}
 	}
 
