@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"log"
 )
 
 func RunDirScript(ext string, cmd string, path string) []string {
@@ -35,9 +36,8 @@ func RunScript(p Pather) string {
 		c = exec.Command(p.GetCommand(), p.GetFilePath())
 	}
 	b, e := c.Output()
-	fmt.Println(string(b))
 	if e != nil {
-		panic(p)
+		log.Println(e)
 	}
 	return string(b)
 }
