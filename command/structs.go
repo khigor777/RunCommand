@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
 )
 
 type Pather interface {
@@ -16,7 +17,8 @@ type AllCommand struct {
 }
 
 func (ac *AllCommand) GetCommand() string {
-	return trim(ac.Command)
+
+	return ac.Command
 }
 
 type AllPaths struct {

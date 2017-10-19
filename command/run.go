@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 )
 
 func RunDirScript(ext string, cmd string, path string) []string {
@@ -26,13 +27,21 @@ func RunDirScript(ext string, cmd string, path string) []string {
 }
 
 func RunScript(p Pather) string {
-	c := exec.Command(p.GetCommand(), p.GetFilePath())
+	var c *exec.Cmd
+	switch runtime.GOOS {
+	case "windows":
+		c = exec.Command("cmd", "/C", p.GetCommand(), p.GetFilePath())
+	case "linux":
+		c = exec.Command(p.GetCommand(), p.GetFilePath())
+	}
 	b, e := c.Output()
+	fmt.Println(string(b))
 	if e != nil {
 		panic(p)
 	}
 	return string(b)
 }
+
 
 func GetCurDir(path string) string {
 	if path != "" {
